@@ -12,7 +12,10 @@ Nothing yet.
 
 ### **Backend**
 
-Use sqlite?
+
+#### Testing
+
+When trying to test, use `python -m pytest tests/` from the root directory.
 
 ## Important Links
 
@@ -48,4 +51,4 @@ Note: It might not be a bad idea for me to get more familiar with industry-stand
 
 ### **Backend**
 
-Nothing yet.
+1. [Flask Testing Tutorial](https://flask.palletsprojects.com/en/2.0.x/tutorial/tests/)

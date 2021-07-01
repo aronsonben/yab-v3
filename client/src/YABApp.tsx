@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Container, Grid, AppBar, Toolbar, Typography, Paper,
 } from '@material-ui/core';
-import Search from './Search';
+import Search, { TCategory } from './Search';
 import './YABApp.css';
+
+// export type TCategory = Readonly<{
+//   id: number,
+//   alias: string,
+//   title: string,
+//   parents: string,
+//   whitelist: string,
+//   blacklist: string
+// }>;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +49,23 @@ const useStyles = makeStyles((theme) => ({
 
 const YABApp = () => {
   const classes = useStyles();
-
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const [categoryList, setCategoryList] = useState<TCategory[]>([] as TCategory[]);
+  // Fetch category list upon initial load
+  useEffect(() => {
+    console.log('fetching categories');
+    fetch('/categories')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data == null || data === {}) {
+          return;
+        }
+        const { categories } = data;
+        console.log(categories);
+        setCategoryList(categories);
+      });
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -57,7 +81,7 @@ const YABApp = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} className={classes.gridItem}>
               <Paper id="search-box-wrapper" className={classes.paper}>
-                <Search />
+                <Search categories={categoryList} />
               </Paper>
             </Grid>
             <Grid item xs={12} className={classes.gridItem}>

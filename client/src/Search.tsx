@@ -5,6 +5,19 @@ import {
 } from '@material-ui/core';
 import './YABApp.css';
 
+export type TCategory = Readonly<{
+  id: number,
+  alias: string,
+  title: string,
+  parents: string,
+  whitelist: string,
+  blacklist: string
+}>;
+
+interface Props {
+  categories: TCategory[];
+}
+
 const categories = [
   {
     alias: 'chinese',
@@ -41,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search: React.FC<Props> = ({ categories }: Props) => {
   const classes = useStyles();
   const [category, setCategory] = React.useState('');
 
@@ -66,7 +79,7 @@ const Search = () => {
         >
           {categories.map((option) => (
             <MenuItem key={option.alias} value={option.alias}>
-              {option.value}
+              {option.title}
             </MenuItem>
           ))}
         </TextField>
