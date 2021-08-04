@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Grid, InputLabel, MenuItem, TextField,
+  Grid, InputLabel, MenuItem, TextField, Button,
 } from '@material-ui/core';
 import './YABApp.css';
 
@@ -15,23 +15,9 @@ export type TCategory = Readonly<{
 }>;
 
 interface Props {
-  categories: TCategory[];
+  categories: TCategory[],
+  handleSearch: (category: string, address: string) => void;
 }
-
-const categories = [
-  {
-    alias: 'chinese',
-    value: 'Chinese',
-  },
-  {
-    alias: 'mexican',
-    value: 'Mexican',
-  },
-  {
-    alias: 'persian',
-    value: 'Persian',
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search: React.FC<Props> = ({ categories }: Props) => {
+const Search: React.FC<Props> = ({ categories, handleSearch }: Props) => {
   const classes = useStyles();
   const [category, setCategory] = React.useState('');
 
@@ -99,6 +85,9 @@ const Search: React.FC<Props> = ({ categories }: Props) => {
           }}
           variant="outlined"
         />
+      </Grid>
+      <Grid item xs={12} sm={6} className={classes.gridItem}>
+        <Button variant="contained" color="primary" onClick={() => handleSearch(category, '1356 Independence Ave SE, Washington, DC 20003')}>Submit</Button>
       </Grid>
     </Grid>
   );

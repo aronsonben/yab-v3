@@ -12,6 +12,13 @@ Nothing yet.
 
 ### **Backend**
 
+To start the backend development environment:
+```
+1. . venv/bin/activate
+2. cd .. /* back to top level */
+3. flask run
+```
+*Note: This is using a workaround to export the env variables, including YELP_KEY. **TODO!***
 
 #### Testing
 

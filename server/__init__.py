@@ -37,5 +37,6 @@ def create_app(test_config=None):
   from . import yab
   app.register_blueprint(yab.bp)
   app.add_url_rule('/categories', endpoint='categories')
+  app.add_url_rule('/search', endpoint='search')
 
   return app
