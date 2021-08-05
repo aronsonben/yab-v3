@@ -22,16 +22,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: theme.spacing(1),
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    borderRadius: '5%',
   },
   gridItem: {
     flexGrow: 1,
     padding: 0,
   },
   cellTest: {
-    border: 'hidden',
+    border: 'black',
   },
   businessImage: {
     height: '80px',
