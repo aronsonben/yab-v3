@@ -86,8 +86,8 @@ const TablePaginationActions = (
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    border: '1px solid black',
-    padding: theme.spacing(2),
+    // border: '1px solid black',
+    padding: theme.spacing(1),
     justifyContent: 'space-evenly',
   },
   gridItem: {
@@ -99,11 +99,11 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
   },
   tableRoot: {
-    border: '1px solid black',
     background: 'white',
   },
   centeredCell: {
     textAlign: 'center',
+    borderBottomColor: 'black',
   },
 }));
 
@@ -126,7 +126,7 @@ const Listing: React.FC<Props> = ({ businessList }: Props) => {
   // };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.tableRoot} aria-label="business table">
         <TableHead className={classes.tableRoot}>
           <TableRow>

@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Grid, TableCell, Typography, Chip,
+  Grid, TableCell, Typography, Chip, Button,
 } from '@material-ui/core';
 import {
   Star, StarBorder, StarHalf,
 } from '@material-ui/icons';
 import './YABApp.css';
-import { yellow } from '@material-ui/core/colors';
 
 interface Props {
   business: any,
@@ -23,24 +22,33 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    padding: theme.spacing(1),
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: '5%',
   },
   gridItem: {
     flexGrow: 1,
     padding: 0,
   },
   cellTest: {
-    background: 'inherit',
-    borderColor: 'black',
+    border: 'hidden',
   },
   businessImage: {
-    maxHeight: '100px',
-    maxWidth: '100px',
+    height: '80px',
+    width: '80px',
+    borderRadius: '50%',
   },
   categoryChip: {
     margin: theme.spacing(0.5),
+    backgroundColor: '#C60B1B',
+    color: 'white',
   },
   starRate: {
-    color: 'yellow',
+    color: 'gold',
+  },
+  directions: {
+    margin: theme.spacing(1),
+    backgroundColor: 'primary',
   },
 }));
 
@@ -48,6 +56,7 @@ const BusinessCard: React.FC<Props> = ({ business }: Props) => {
   const classes = useStyles();
 
   const createRating = (rating: number) => {
+    // TODO: improve this by creating a loop (?)
     // apparently it's better for performance to use if-else...
     switch (true) {
       case rating > 4.5:
@@ -140,14 +149,6 @@ const BusinessCard: React.FC<Props> = ({ business }: Props) => {
           <Typography variant="h5">{business.name}</Typography>
         </Grid>
         <Grid item xs={12} className={classes.gridItem}>
-          {createRating(business.rating)}
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          {business.categories.map(
-            (categ: Categories) => <Chip label={categ.title} className={classes.categoryChip} />,
-          )}
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
           <Typography variant="caption">
             {business.location.display_address[0]}
             {' '}
@@ -155,13 +156,24 @@ const BusinessCard: React.FC<Props> = ({ business }: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.gridItem}>
-          <Typography variant="caption">
-            {getMiles(business.distance)}
-            {' mi'}
-          </Typography>
+          <Typography variant="caption">{business.display_phone}</Typography>
         </Grid>
         <Grid item xs={12} className={classes.gridItem}>
-          <Typography variant="caption">{business.display_phone}</Typography>
+          {createRating(business.rating)}
+        </Grid>
+        <Grid item xs={12} className={classes.gridItem}>
+          {business.categories.map(
+            (categ: Categories) => <Chip label={categ.title} size="small" key={categ.alias} className={classes.categoryChip} />,
+          )}
+        </Grid>
+        <Grid item xs={6} className={classes.gridItem}>
+          <Button variant="contained" size="small" color="primary" disableElevation className={classes.directions}>Directions</Button>
+        </Grid>
+        <Grid item xs={6} className={classes.gridItem}>
+          <Typography variant="caption">
+            {getMiles(business.distance)}
+            {' mi away'}
+          </Typography>
         </Grid>
       </Grid>
     </TableCell>

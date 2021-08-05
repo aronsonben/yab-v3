@@ -22,8 +22,8 @@ interface Props {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    border: '1px solid #d3d3d3',
-    padding: theme.spacing(2),
+    // border: '1px solid #d3d3d3',
+    // padding: theme.spacing(1),
     justifyContent: 'space-evenly',
   },
   gridItem: {
@@ -51,7 +51,6 @@ const Search: React.FC<Props> = ({ categories, handleSearch }: Props) => {
   return (
     <Grid container spacing={2} component="form" className={classes.root} id="search-box">
       <Grid item xs={12} sm={6} className={classes.gridItem}>
-        <InputLabel>Category</InputLabel>
         <TextField
           id="category-select"
           label="Category"
@@ -71,7 +70,6 @@ const Search: React.FC<Props> = ({ categories, handleSearch }: Props) => {
         </TextField>
       </Grid>
       <Grid item xs={12} sm={6} className={classes.gridItem}>
-        <InputLabel>Address</InputLabel>
         <TextField
           id="address-search-box"
           label="Address"

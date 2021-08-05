@@ -397,11 +397,14 @@ const bizListTemp = [{
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: 'aliceblue',
+    // backgroundColor: 'aliceblue',
     minHeight: '100vh',
   },
   title: {
     flexGrow: 1,
+  },
+  toolbar: {
+    backgroundColor: '#C60B1B',
   },
   content: {
     textAlign: 'center',
@@ -412,10 +415,16 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   gridItem: {
-    backgroundColor: '#819595',
+    // backgroundColor: '#819595',
   },
   paper: {
     padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+  },
+  paperNoPad: {
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -474,9 +483,9 @@ const YABApp = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            News
+        <Toolbar className={classes.toolbar}>
+          <Typography component="h1" variant="h6" noWrap className={classes.title}>
+            Yelp Search by Category
           </Typography>
         </Toolbar>
       </AppBar>
@@ -489,7 +498,7 @@ const YABApp = () => {
               </Paper>
             </Grid>
             <Grid item xs={12} className={classes.gridItem}>
-              <Paper className={classes.paper}>
+              <Paper className={classes.paperNoPad}>
                 <Listing businessList={businessList} />
               </Paper>
             </Grid>
