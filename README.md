@@ -53,7 +53,7 @@ Note: It might not be a bad idea for me to get more familiar with industry-stand
 #### *Other Links*
 
 * [Material-UI](https://material-ui.com/components/grid/)
-
+* [Proxying API Requests in Development (create-react-app)](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
 
 
 ### **Backend**
