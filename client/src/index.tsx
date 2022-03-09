@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider, createTheme, makeStyles } from '@material-ui/core/styles';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import YABApp from './YABApp';
-// import './index.css';
+
+const theme = createTheme();
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
     <YABApp />
   </React.StrictMode>,
   document.getElementById('root'),
