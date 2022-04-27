@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@mui/styles';
 import {
   Typography, Table, TableContainer, TableBody, TableCell, TableHead,
-  TableRow, Paper, TableFooter, IconButton, TablePagination,
-} from '@material-ui/core';
+  TableRow, Paper, TableFooter, IconButton, TablePagination, Container,
+} from '@mui/material';
 import {
   FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
 import BusinessCard from './BusinessCard';
 import './YABApp.css';
 
@@ -19,6 +20,16 @@ const useStyles1 = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  margin: theme.spacing(2),
+  display: 'flex',
+  overflow: 'auto',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
+  backgroundColor: 'beige',
 }));
 
 interface TablePaginationActionsProps {
@@ -126,54 +137,52 @@ const Listing: React.FC<Props> = ({ businessList }: Props) => {
   // };
 
   return (
-    <TableContainer>
-      <Table className={classes.tableRoot} aria-label="business table">
-        <TableHead className={classes.tableRoot}>
-          <TableRow>
-            <TableCell className={classes.centeredCell}>
-              <Typography variant="h6" color="inherit" noWrap>
-                Business Listing
-              </Typography>
-              <Typography variant="subtitle1" color="inherit" noWrap className={classes.subtitle}>
-                { 'Showing ' }
-                {rowsPerPage}
-                { ' of ' }
-                {businessList.length}
-                { ' businesses' }
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? businessList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : businessList
-          ).map((biz) => (
-            <TableRow key={biz.alias}>
-              <BusinessCard business={biz} />
+    <Container>
+      <StyledPaper>
+        <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: '1' }}>
+          Business Listing
+        </Typography>
+        <Typography component="p" variant="subtitle1" noWrap sx={{ flexGrow: '1' }} className={classes.subtitle}>
+          { 'Showing ' }
+          {rowsPerPage}
+          { ' of ' }
+          {businessList.length}
+          { ' businesses' }
+        </Typography>
+      </StyledPaper>
+      <TableContainer>
+        <Table className={classes.tableRoot} aria-label="business table">
+          <TableBody>
+            {(rowsPerPage > 0
+              ? businessList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : businessList
+            ).map((biz) => (
+              <TableRow key={biz.alias}>
+                <BusinessCard business={biz} />
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                colSpan={1}
+                count={businessList.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              colSpan={1}
-              count={businessList.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 

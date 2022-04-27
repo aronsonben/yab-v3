@@ -3,3 +3,15 @@
   background-color: aliceblue;
   min-height: 100vh;
 }
+
+#rootContainer {
+  padding: 0px;
+}
+
+#search-box-wrapper {
+  padding: 0px;
+}
+
+.yabComponentContainer {
+  padding: 15px;
+}

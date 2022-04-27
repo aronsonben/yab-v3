@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import {
-  Container, Grid, AppBar, Toolbar, Typography, Paper,
-} from '@material-ui/core';
+  Container, Grid, AppBar,
+  Toolbar, Typography, Paper,
+} from '@mui/material';
+import { Theme, styled } from '@mui/material/styles';
 import Search, { TCategory } from './Search';
 import Listing from './Listing';
 import './YABApp.css';
+
+declare module '@mui/styles/defaultTheme' {
+  // (remove this line if you don't have the rule enabled)
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 // export type TCategory = Readonly<{
 //   id: number,
@@ -395,50 +403,30 @@ const bizListTemp = [{
   url: 'https://www.yelp.com/biz/grill-kabob-bethesda?adjust_creative=UBP9-ctBfIQcQ_5xVmk5UA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=UBP9-ctBfIQcQ_5xVmk5UA',
 }];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // backgroundColor: 'aliceblue',
-    minHeight: '100vh',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  toolbar: {
-    backgroundColor: '#C60B1B',
-  },
-  content: {
-    textAlign: 'center',
-  },
-  container: {
-    flexGrow: 1,
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(4),
-  },
-  gridItem: {
-    // backgroundColor: '#819595',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-  },
-  paperNoPad: {
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-  },
-  fixedHeight: {
-    height: 240,
-  },
+/* *********** Styled Components *********** */
+/* created during v5 MUI transition (3/9/22) */
+const StyledContainer = styled(Container)(({ theme }) => ({
+  flexGrow: 1,
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(4),
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  display: 'flex',
+  overflow: 'auto',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
+}));
+
+const StyledNoPadPaper = styled(Paper)(({ theme }) => ({
+  display: 'flex',
+  overflow: 'auto',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
 }));
 
 const YABApp = () => {
-  const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   const [categoryList, setCategoryList] = useState<TCategory[]>([] as TCategory[]);
   // Fetch category list upon initial load
   useEffect(() => {
@@ -481,31 +469,39 @@ const YABApp = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <Container maxWidth={false} sx={{ minHeight: '100vh' }} id="rootContainer">
       <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <Typography component="h1" variant="h6" noWrap className={classes.title}>
+        <Toolbar sx={{ backgroundColor: '#C60B1B' }}>
+          <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: '1' }}>
             Yelp Search by Category
           </Typography>
         </Toolbar>
       </AppBar>
-      <div className={classes.content}>
-        <Container maxWidth="lg" className={classes.container}>
+      {/* divs changed to Container in v5 transition. May need to fix */}
+      <Container sx={{ textAlign: 'center' }}>
+        <StyledContainer maxWidth="lg">
           <Grid container spacing={3}>
-            <Grid item xs={12} className={classes.gridItem}>
-              <Paper id="search-box-wrapper" className={classes.paper}>
-                <Search categories={categoryList} handleSearch={handleSearch} />
-              </Paper>
+            <Grid item xs={12} sx={{ /* backgroundColor: '#819595', */ }}>
+              <StyledPaper id="search-box-wrapper">
+                <Toolbar sx={{ backgroundColor: '#C60B1B' }}>
+                  <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: '1' }}>
+                    Yelp Search by Category
+                  </Typography>
+                </Toolbar>
+                <Container className="yabComponentContainer">
+                  <Search categories={categoryList} handleSearch={handleSearch} />
+                </Container>
+              </StyledPaper>
             </Grid>
-            <Grid item xs={12} className={classes.gridItem}>
-              <Paper className={classes.paperNoPad}>
+            <Grid item xs={12} sx={{ /* backgroundColor: '#819595', */ }}>
+              <StyledNoPadPaper>
                 <Listing businessList={businessList} />
-              </Paper>
+              </StyledNoPadPaper>
             </Grid>
           </Grid>
-        </Container>
-      </div>
-    </div>
+        </StyledContainer>
+      </Container>
+    </Container>
   );
 };
 

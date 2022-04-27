@@ -1,11 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import {
-  Grid, TableCell, Typography, Chip, Button,
-} from '@material-ui/core';
+  Grid, TableCell, Typography, Chip, Button, Paper,
+} from '@mui/material';
 import {
   Star, StarBorder, StarHalf,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
 import './YABApp.css';
 
 interface Props {
@@ -16,6 +17,16 @@ interface Categories {
   alias: string,
   title: string,
 }
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  margin: theme.spacing(2),
+  display: 'flex',
+  overflow: 'auto',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
+  backgroundColor: 'lavender',
+}));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -138,41 +149,43 @@ const BusinessCard: React.FC<Props> = ({ business }: Props) => {
 
   return (
     <TableCell className={classes.cellTest} align="center">
-      <Grid container spacing={0} className={classes.root}>
-        <Grid item xs={12} className={classes.gridItem}>
-          <img className={classes.businessImage} src={business.image_url} alt={business.alias} />
+      <StyledPaper>
+        <Grid container spacing={0} className={classes.root}>
+          <Grid item xs={12} className={classes.gridItem}>
+            <img className={classes.businessImage} src={business.image_url} alt={business.alias} />
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            <Typography variant="h5">{business.name}</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            <Typography variant="caption">
+              {business.location.display_address[0]}
+              {' '}
+              {business.location.display_address[1]}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            <Typography variant="caption">{business.display_phone}</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            {createRating(business.rating)}
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            {business.categories.map(
+              (categ: Categories) => <Chip label={categ.title} size="small" key={categ.alias} className={classes.categoryChip} />,
+            )}
+          </Grid>
+          <Grid item xs={6} className={classes.gridItem}>
+            <Button variant="contained" size="small" color="primary" disableElevation className={classes.directions}>Directions</Button>
+          </Grid>
+          <Grid item xs={6} className={classes.gridItem}>
+            <Typography variant="caption">
+              {getMiles(business.distance)}
+              {' mi away'}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Typography variant="h5">{business.name}</Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Typography variant="caption">
-            {business.location.display_address[0]}
-            {' '}
-            {business.location.display_address[1]}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          <Typography variant="caption">{business.display_phone}</Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          {createRating(business.rating)}
-        </Grid>
-        <Grid item xs={12} className={classes.gridItem}>
-          {business.categories.map(
-            (categ: Categories) => <Chip label={categ.title} size="small" key={categ.alias} className={classes.categoryChip} />,
-          )}
-        </Grid>
-        <Grid item xs={6} className={classes.gridItem}>
-          <Button variant="contained" size="small" color="primary" disableElevation className={classes.directions}>Directions</Button>
-        </Grid>
-        <Grid item xs={6} className={classes.gridItem}>
-          <Typography variant="caption">
-            {getMiles(business.distance)}
-            {' mi away'}
-          </Typography>
-        </Grid>
-      </Grid>
+      </StyledPaper>
     </TableCell>
   );
 };
